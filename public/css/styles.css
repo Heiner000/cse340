@@ -290,6 +290,92 @@ h1 {
     font-size: 1.1rem;
 }
 
+/* vehicle detail */
+#vehicle-detail {
+    padding: var(--space-sm);
+}
+
+.detail-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    background: var(--background-light);
+    border-radius: 8px;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: var(--space-sm);
+}
+
+.detail-img {
+    width: 100%;
+    /* max-height: 400px; */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-img img {
+    width: 100%;
+    height: auto;
+    /* object-fit: cover; */
+    display: block;
+    border-radius: 4px;
+}
+
+.detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.price-mileage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    background: var(--overlay-bg);
+    padding: var(--space-sm);
+    border-radius: 4px;
+}
+
+.vehicle-specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xs);
+}
+
+.spec-item {
+    padding: var(--space-xs);
+}
+
+.vehicle-description {
+    background: var(--overlay-bg);
+    padding: var(--space-sm);
+    border-radius: 4px;
+}
+
+.label {
+    color: var(--secondary-color);
+    font-weight: 500;
+    display: block;
+    margin-bottom: var(--space-xs);
+}
+
+.value {
+    color: var(--text-color);
+    font-weight: 400;
+}
+
+.price .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.mileage .value {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
 /* footer styles */
 footer {
     background: var(--background-light);
@@ -394,5 +480,28 @@ footer {
 
     #inv-display span {
         font-size: 1.1rem;
+    }
+
+    /* details */
+    .detail-container {
+        grid-template-columns: auto 1fr;
+        gap: var(--space-lg);
+        padding: var(--space-lg);
+        align-items: center;
+        min-height: 400px;
+    }
+
+    .detail-img {
+        width: auto;
+        max-width: 600px;
+    }
+
+    .detail-img img {
+        width: auto;
+        max-width: 100%;
+    }
+
+    .vehicle-specs {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
