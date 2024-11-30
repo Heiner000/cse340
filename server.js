@@ -12,7 +12,7 @@ const app = express();
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoutes");
-const accountRoute = require("./routes/accountRoute.js");
+const accountRoute = require("./routes/accountRoute");
 const utilities = require("./utilities/");
 const session = require("express-session");
 const pool = require("./database/");
@@ -55,12 +55,12 @@ app.use(static);
 app.get("/", utilities.handleErrors(baseController.buildHome));
 // Inventory routes
 app.use("/inv", inventoryRoute);
+// Account route
+app.use("/account", accountRoute);
 //File Not Found Route - must be last route in the list
 app.use(async (req, res, next) => {
     next({ status: 404, message: "Sorry, we appear to have lost that page." });
 });
-// Account route
-app.use("/account", accountRoute);
 
 /* ***********************
  * Express Error Handler

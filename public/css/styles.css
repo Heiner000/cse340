@@ -376,6 +376,63 @@ h1 {
     font-weight: 600;
 }
 
+/* login */
+.login-container {
+    width: 100%;
+    padding: var(--space-sm);
+    margin: 0 auto;
+    margin-top: var(--space-md);
+}
+
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    color: var(--secondary-color);
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: var(--space-sm);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: var(--base-font-size);
+}
+
+.form-button {
+    width: 100%;
+    padding: var(--space-sm);
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: var(--base-font-size);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-button:hover {
+    background: var(--secondary-color);
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: var(--space-md);
+}
+
+.signup-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
 /* footer styles */
 footer {
     background: var(--background-light);
@@ -503,5 +560,28 @@ footer {
 
     .vehicle-specs {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* login */
+    .login-container {
+        max-width: 400px;
+        padding: var(--space-lg);
+        background: var(--overlay-bg);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group input {
+        padding: var(--space-sm);
+    }
+
+    .form-button {
+        padding: var(--space-sm);
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(0, 0, 150, 0.1);
     }
 }

@@ -5,9 +5,6 @@ const accountController = require("../controllers/accountController");
 const utilities = require("../utilities");
 
 // route for my account
-router.get(
-    "/type/:accountId",
-    utilities.handleErrors(accountController.buildByAccountId)
-);
+router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
 module.exports = router;
