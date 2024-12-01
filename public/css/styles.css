@@ -482,6 +482,27 @@ h1 {
     outline: none;
 }
 
+/* management */
+.management-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.management-links a {
+    padding: var(--space-xs) var(--space-sm);
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.management-links a:hover {
+    background-color: var(--secondary-color);
+}
+
 /* footer styles */
 footer {
     background: var(--background-light);

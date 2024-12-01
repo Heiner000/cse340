@@ -16,7 +16,13 @@ router.get(
     utilities.handleErrors(invController.buildByInventoryId)
 );
 
+// Route to manage inventory
+router.get("/", utilities.handleErrors(invController.buildManagement));
+
 // route to trigger 500 error
-router.get("/trigger-error", utilities.handleErrors(invController.triggerError))
+router.get(
+    "/trigger-error",
+    utilities.handleErrors(invController.triggerError)
+);
 
 module.exports = router;

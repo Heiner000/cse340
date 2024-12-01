@@ -41,6 +41,18 @@ invCont.buildByInventoryId = async function (req, res, next) {
 };
 
 /* ***************************
+ *  Deliver management view
+ * ************************** */
+invCont.buildManagement = async function (req, res, next) {
+    let nav = await utilities.getNav();
+    res.render("./inventory/management", {
+        title: "Vehicle Management",
+        nav,
+        errors: null,
+    });
+};
+
+/* ***************************
  *  Build error test function
  * ************************** */
 invCont.triggerError = async function (req, res, next) {
