@@ -376,8 +376,8 @@ h1 {
     font-weight: 600;
 }
 
-/* login */
-.login-container {
+/* login & registration */
+.form-container {
     width: 100%;
     padding: var(--space-sm);
     margin: 0 auto;
@@ -431,6 +431,55 @@ h1 {
 
 .signup-link a:hover {
     text-decoration: underline;
+}
+
+/* password styles */
+.password-input-group {
+    position: relative;
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.password-requirements {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-top: var(--space-xs);
+}
+
+.password-requirements ul {
+    list-style: none;
+    margin-left: var(--space-sm);
+    margin-top: var(--space-xs);
+}
+
+.show-password {
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    /* font-weight: bold; */
+}
+
+/* validation styles */
+.form-group input:required:invalid {
+    border-color: #dc3545;
+}
+
+.form-group input:required:valid {
+    border-color: #198754;
+}
+
+.form-group input:focus:required:invalid {
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+    outline: none;
+}
+
+.form-group input:focus:required:valid {
+    box-shadow: 0 0 0 2px rgba(25, 135, 84, 0.25);
+    outline: none;
 }
 
 /* footer styles */
@@ -562,8 +611,8 @@ footer {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    /* login */
-    .login-container {
+    /* login & registration */
+    .form-container {
         max-width: 400px;
         padding: var(--space-lg);
         background: var(--overlay-bg);
