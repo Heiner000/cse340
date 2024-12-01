@@ -3,6 +3,7 @@ const express = require("express");
 const router = new express.Router();
 const invController = require("../controllers/invController");
 const utilities = require("../utilities/");
+const invValidate = require("../utilities/inventory-validation");
 
 // Route to build inventory by classification view
 router.get(
@@ -18,6 +19,18 @@ router.get(
 
 // Route to manage inventory
 router.get("/", utilities.handleErrors(invController.buildManagement));
+
+// route to build classification view
+router.get(
+    "/add-classification",
+    utilities.handleErrors(invController.buildAddClassification)
+);
+router.post(
+    "/add-classification",
+    invValidate.classificationRules(),
+    invValidate.checkClassData,
+    utilities.handleErrors(invController.addClassification)
+);
 
 // route to trigger 500 error
 router.get(

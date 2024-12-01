@@ -22,6 +22,18 @@ invCont.buildByClassificationId = async function (req, res, next) {
     });
 };
 
+/* ****************************************
+ *  Deliver classification view
+ * *************************************** */
+invCont.buildAddClassification = async function (req, res, next) {
+    let nav = await utilities.getNav();
+    res.render("./inventory/add-classification", {
+        title: "Add Classification",
+        nav,
+        errors: null,
+    });
+}
+
 /* ***************************
  *  Build detail by inventory id view
  * ************************** */
@@ -51,6 +63,37 @@ invCont.buildManagement = async function (req, res, next) {
         errors: null,
     });
 };
+
+
+
+/* ****************************************
+ *  Process Classification
+ * *************************************** */
+invCont.addClassification = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    const { classification_name } = req.body;
+
+    const addResult = await invModel.addClassification(classification_name);
+
+    if (addResult.rowCount > 0) {
+        req.flash(
+            "notice",
+            `The ${classification_name} classification was successfully added.`
+        );
+        res.status(201).render("inventory/management", {
+            title: "Vehicle Management",
+            nav,
+            errors: null,
+        });
+    } else {
+        req.flash("notice", "Sorry, adding the classification failed.");
+        res.status(501).render("inventory/add-classification", {
+            title: "Add Classification",
+            nav,
+            errors: null,
+        });
+    }
+}
 
 /* ***************************
  *  Build error test function
