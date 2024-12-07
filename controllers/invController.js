@@ -67,15 +67,14 @@ invCont.buildManagement = async function (req, res, next) {
 
 
 /* ****************************************
- *  Process Classification
+ *  Process add Classification
  * *************************************** */
 invCont.addClassification = async function (req, res, next) {
-    let nav = await utilities.getNav()
     const { classification_name } = req.body;
-
     const addResult = await invModel.addClassification(classification_name);
 
     if (addResult.rowCount > 0) {
+    let nav = await utilities.getNav()
         req.flash(
             "notice",
             `The ${classification_name} classification was successfully added.`
@@ -86,6 +85,7 @@ invCont.addClassification = async function (req, res, next) {
             errors: null,
         });
     } else {
+    let nav = await utilities.getNav()
         req.flash("notice", "Sorry, adding the classification failed.");
         res.status(501).render("inventory/add-classification", {
             title: "Add Classification",

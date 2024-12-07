@@ -25,6 +25,8 @@ router.get(
     "/add-classification",
     utilities.handleErrors(invController.buildAddClassification)
 );
+
+// route to process added classification form
 router.post(
     "/add-classification",
     invValidate.classificationRules(),

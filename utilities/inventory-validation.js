@@ -10,6 +10,7 @@ validate.classificationRules = () => {
     return [
         body("classification_name")
             .trim()
+            .isAlphanumeric()
             .isLength({ min: 1 })
             .withMessage("Please provide a classification name.")
             .matches(/^[a-zA-Z0-9]+$/)
