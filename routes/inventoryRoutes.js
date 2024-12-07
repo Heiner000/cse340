@@ -34,6 +34,20 @@ router.post(
     utilities.handleErrors(invController.addClassification)
 );
 
+// route to show add inventory forom
+router.get(
+    "/add-inventory",
+    utilities.handleErrors(invController.buildAddInventory)
+);
+
+// route to process add inventory form
+router.post(
+    "/add-inventory",
+    invValidate.inventoryRules(),
+    invValidate.checkInventoryData,
+    utilities.handleErrors(invController.addInventory)
+);
+
 // route to trigger 500 error
 router.get(
     "/trigger-error",

@@ -111,7 +111,7 @@ validate.loginRules = () => {
 validate.checkLoginData = async (req, res, next) => {
     const { account_email } = req.body;
     let errors = [];
-    errors = validateResult(req);
+    errors = validationResult(req);
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
         res.render("account/login", {
