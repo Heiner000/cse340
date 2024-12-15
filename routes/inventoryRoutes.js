@@ -5,6 +5,7 @@ const invController = require("../controllers/invController");
 const utilities = require("../utilities/");
 const invValidate = require("../utilities/inventory-validation");
 
+// *********** UNPROTECTED ROUTES ************* //
 // Route to build inventory by classification view
 router.get(
     "/type/:classificationId",
@@ -17,18 +18,21 @@ router.get(
     utilities.handleErrors(invController.buildByInventoryId)
 );
 
+// *********** PROTECTED ROUTES *********** //
 // Route to manage inventory
-router.get("/", utilities.handleErrors(invController.buildManagement));
+router.get("/", utilities.checkAdminAuth, utilities.handleErrors(invController.buildManagement));
 
 // route to build classification view
 router.get(
     "/add-classification",
+    utilities.checkAdminAuth,
     utilities.handleErrors(invController.buildAddClassification)
 );
 
 // route to process added classification form
 router.post(
     "/add-classification",
+    utilities.checkAdminAuth,
     invValidate.classificationRules(),
     invValidate.checkClassData,
     utilities.handleErrors(invController.addClassification)
@@ -37,12 +41,14 @@ router.post(
 // route to show add inventory forom
 router.get(
     "/add-inventory",
+    utilities.checkAdminAuth,
     utilities.handleErrors(invController.buildAddInventory)
 );
 
 // route to process add inventory form
 router.post(
     "/add-inventory",
+    utilities.checkAdminAuth,
     invValidate.inventoryRules(),
     invValidate.checkInventoryData,
     utilities.handleErrors(invController.addInventory)
@@ -57,12 +63,14 @@ router.get(
 // route to get inventory modification form
 router.get(
     "/edit/:inv_id",
+    utilities.checkAdminAuth,
     utilities.handleErrors(invController.buildEditInventoryView)
 );
 
 // route to handle incoming update requests
 router.post(
     "/update/",
+    utilities.checkAdminAuth,
     invValidate.inventoryRules(),
     invValidate.checkUpdateData,
     utilities.handleErrors(invController.updateInventory)
@@ -71,12 +79,14 @@ router.post(
 // route to show item delete confirmation view
 router.get(
     "/delete/:inv_id",
+    utilities.checkAdminAuth,
     utilities.handleErrors(invController.buildDeleteConfirmView)
 );
 
 // route to process item deletion
 router.post(
     "/delete",
+    utilities.checkAdminAuth,
     utilities.handleErrors(invController.deleteInventoryItem)
 );
 
