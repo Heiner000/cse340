@@ -114,6 +114,7 @@ invCont.buildAddInventory = async function (req, res) {
  * ************************** */
 
 invCont.addInventory = async function (req, res) {
+    let nav = await utilities.getNav();
     const {
         inv_make,
         inv_model,
@@ -141,24 +142,26 @@ invCont.addInventory = async function (req, res) {
     );
 
     if (result) {
+        let classificationSelect = await utilities.buildClassificationList();
         req.flash(
             "notice",
             `The ${inv_make} ${inv_model} was successfully added.`
         );
         res.status(201).render("inventory/management", {
             title: "Vehicle Management",
-            nav: await utilities.getNav(),
+            nav,
+            classificationSelect,
             errors: null,
         });
     } else {
-        const classList = await utilities.buildClassificationList(
+        let classificationSelect = await utilities.buildClassificationList(
             classification_id
         );
         req.flash("notice", "Sorry, adding vehicle failed.");
         res.status(501).render("inventory/add-inventory", {
             title: "Add New Vehicle",
-            nav: await utilities.getNav(),
-            classList,
+            nav,
+            classificationSelect,
             errors: null,
             inv_make,
             inv_model,
@@ -308,6 +311,45 @@ invCont.updateInventory = async function (req, res, next) {
     } catch (error) {
         console.error("Error in updateInventory controller: ", error);
         next(error);
+    }
+};
+
+/* ***************************
+ *  Build delete confirmation view
+ * ************************** */
+invCont.buildDeleteConfirmView = async function (req, res, next) {
+    const inv_id = parseInt(req.params.inv_id);
+    let nav = await utilities.getNav();
+    const itemData = await invModel.getInventoryByInvId(inv_id);
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+
+    res.render("./inventory/delete-confirm", {
+        title: "Delete " + itemName,
+        nav,
+        errors: null,
+        inv_id: itemData.inv_id,
+        inv_make: itemData.inv_make,
+        inv_model: itemData.inv_model,
+        inv_year: itemData.inv_year,
+        inv_price: itemData.inv_price,
+    });
+};
+
+/* ***************************
+ *  Process Inventory Item Deletion
+ * ************************** */
+invCont.deleteInventoryItem = async function (req, res, next) {
+    const inv_id = parseInt(req.body.inv_id);
+    let nav = await utilities.getNav();
+
+    const deleteResult = await invModel.deleteInventoryItem(inv_id);
+
+    if (deleteResult.rowCount) {
+        req.flash("notice", "The vehicle was successfully deleted");
+        res.redirect("/inv/");
+    } else {
+        req.flash("notice", "Delete failed. Please try again.");
+        res.status(501).redirect(`/inv/delete/${inv_id}`);
     }
 };
 

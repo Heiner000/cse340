@@ -1,0 +1,33 @@
+<%- messages() %>
+
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } %>
+
+<p class="notice">Confirm Deletion - The delete is permanent.</p>
+
+<form id="deleteForm" action="/inv/delete" method="post">
+  <div>
+    <label for="inv_make">Make:</label>
+    <input type="text" name="inv_make" id="inv_make" value="<%= locals.inv_make %>" readonly>
+  </div>
+
+  <div> 
+    <label for="inv_model">Model:</label>
+    <input type="text" name="inv_model" id="inv_model" value="<%= locals.inv_model %>" readonly>
+  </div>
+
+  <div>
+    <label for="inv_year">Year:</label> 
+    <input type="text" name="inv_year" id="inv_year" value="<%= locals.inv_year %>" readonly>
+  </div>
+
+  <div>
+    <label for="inv_price">Price:</label>
+    <input type="text" name="inv_price" id="inv_price" value="<%= locals.inv_price %>" readonly>
+  </div>
+
+  <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
+  
+  <button type="submit">Delete</button>
+</form>
