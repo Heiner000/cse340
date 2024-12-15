@@ -565,6 +565,72 @@ h1 {
     background-color: var(--secondary-color);
 }
 
+/* notice */
+.notice {
+    background: #dc3545;
+    color: var(--background-light);
+    padding: var(--space-sm);
+    margin: var(--space-sm) 0;
+    border-radius: 4px;
+    list-style: none;
+}
+
+.notice li {
+    margin-bottom: var(--space-xs);
+}
+
+.notice li:last-child {
+    margin-bottom: 0;
+}
+
+/* inventory management table */
+#inventoryDisplay {
+    width: 100%;
+    margin-top: var(--space-md);
+    border-collapse: collapse;
+    background: var(--background-light);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#inventoryDisplay thead {
+    background: var(--secondary-color);
+    color: var(--background-light);
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+    padding: var(--space-sm);
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+#inventoryDisplay td a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+#inventoryDisplay td a:hover {
+    color: var(--secondary-color);
+}
+
+/* classification select dropdown */
+#classificationList {
+    width: 100%;
+    padding: var(--space-sm);
+    margin: var(--space-sm) 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: var(--base-font-size);
+    background-color: var(--background-light);
+}
+
+#classificationList:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 0, 150, 0.1);
+}
+
 /* footer styles */
 footer {
     background: var(--background-light);
@@ -720,5 +786,13 @@ footer {
         outline: none;
         border-color: var(--primary-color);
         box-shadow: 0 0 0 2px rgba(0, 0, 150, 0.1);
+    }
+
+    #inventoryDisplay {
+        margin: var(--space-lg) 0;
+    }
+
+    #classificationList {
+        max-width: 350px;
     }
 }

@@ -48,6 +48,26 @@ router.post(
     utilities.handleErrors(invController.addInventory)
 );
 
+// route to get inventory by classification id
+router.get(
+    "/getInventory/:classification_id",
+    utilities.handleErrors(invController.getInventoryJSON)
+);
+
+// route to get inventory modification form
+router.get(
+    "/edit/:inv_id",
+    utilities.handleErrors(invController.buildEditInventoryView)
+);
+
+// route to handle incoming update requests
+router.post(
+    "/update/",
+    invValidate.inventoryRules(),
+    invValidate.checkUpdateData,
+    utilities.handleErrors(invController.updateInventory)
+);
+
 // route to trigger 500 error
 router.get(
     "/trigger-error",
