@@ -8,93 +8,88 @@
             <%# Message display placeholder %>
                 <% messages() %>
 
-                    <% console.log("View received vehicles:", vehicles) %>
-                        <% console.log("View received similarVehicles:", similarVehicles) %>
+                    <%# Main content %>
+                        <div class="comparison-grid">
+                            <% if (vehicles && vehicles.length) { %>
+                                <% vehicles.forEach(vehicle=> { %>
+                                    <div class="vehicle-card">
+                                        <img src="<%= vehicle.inv_image %>"
+                                            alt="Image of <%= vehicle.inv_make %> <%= vehicle.inv_model %>">
 
-                            <%# Main content %>
-                                <div class="comparison-grid">
-                                    <% if (vehicles && vehicles.length) { %>
-                                        <% vehicles.forEach(vehicle=> { %>
-                                            <div class="vehicle-card">
-                                                <img src="<%= vehicle.inv_image %>"
-                                                    alt="Image of <%= vehicle.inv_make %> <%= vehicle.inv_model %>">
+                                        <h2>
+                                            <%= vehicle.inv_make %>
+                                                <%= vehicle.inv_model %>
+                                        </h2>
 
-                                                <h2>
-                                                    <%= vehicle.inv_make %>
-                                                        <%= vehicle.inv_model %>
-                                                </h2>
-
-                                                <div class="specs-grid">
-                                                    <div class="spec-item">
-                                                        <span class="label">Price:</span>
-                                                        <span class="value">$<%= new
-                                                                Intl.NumberFormat('en-US').format(vehicle.inv_price) %>
-                                                                </span>
-                                                    </div>
-
-                                                    <div class="spec-item">
-                                                        <span class="label">Year:</span>
-                                                        <span class="value">
-                                                            <%= vehicle.inv_year %>
-                                                        </span>
-                                                    </div>
-
-                                                    <div class="spec-item">
-                                                        <span class="label">Mileage:</span>
-                                                        <span class="value">
-                                                            <%= new Intl.NumberFormat('en-US').format(vehicle.inv_miles)
-                                                                %>
-                                                                miles
-                                                        </span>
-                                                    </div>
-
-                                                    <div class="spec-item">
-                                                        <span class="label">Color:</span>
-                                                        <span class="value">
-                                                            <%= vehicle.inv_color %>
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                <p class="description">
-                                                    <%= vehicle.inv_description %>
-                                                </p>
-
-                                                <form action="/inv/compare/remove" method="POST">
-                                                    <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
-                                                    <button type="submit" class="btn btn-remove">Remove from
-                                                        Comparison</button>
-                                                </form>
+                                        <div class="specs-grid">
+                                            <div class="spec-item">
+                                                <span class="label">Price:</span>
+                                                <span class="value">$<%= new
+                                                        Intl.NumberFormat('en-US').format(vehicle.inv_price) %>
+                                                </span>
                                             </div>
-                                            <% }) %>
-                                                <% } else { %>
-                                                    <p class="notice">No vehicles selected for comparison.</p>
-                                                    <% } %>
-                                </div>
 
-                                <% if (similarVehicles && similarVehicles.length) { %>
-                                    <section class="similar-vehicles">
-                                        <h2>Similar Vehicles</h2>
-                                        <div class="vehicle-grid">
-                                            <% similarVehicles.forEach(vehicle=> { %>
-                                                <div class="vehicle-card">
-                                                    <h3>
-                                                        <%= vehicle.inv_make %>
-                                                            <%= vehicle.inv_model %>
-                                                    </h3>
-                                                    <img src="<%= vehicle.inv_thumbnail %>"
-                                                        alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>">
-                                                    <p class="price">$<%= new
-                                                            Intl.NumberFormat('en-US').format(vehicle.inv_price) %>
-                                                    </p>
-                                                    <form action="/inv/compare/add" method="POST">
-                                                        <input type="hidden" name="inv_id"
-                                                            value="<%= vehicle.inv_id %>">
-                                                        <button type="submit" class="btn btn-add">Add to
-                                                            Comparison</button>
-                                                    </form>
-                                                </div>
-                                                <% }) %>
+                                            <div class="spec-item">
+                                                <span class="label">Year:</span>
+                                                <span class="value">
+                                                    <%= vehicle.inv_year %>
+                                                </span>
+                                            </div>
+
+                                            <div class="spec-item">
+                                                <span class="label">Mileage:</span>
+                                                <span class="value">
+                                                    <%= new Intl.NumberFormat('en-US').format(vehicle.inv_miles) %>
+                                                        miles
+                                                </span>
+                                            </div>
+
+                                            <div class="spec-item">
+                                                <span class="label">Color:</span>
+                                                <span class="value">
+                                                    <%= vehicle.inv_color %>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </section>
-                                    <% } %>
+
+                                        <p class="description">
+                                            <%= vehicle.inv_description %>
+                                        </p>
+
+                                        <form action="/inv/compare/remove" method="POST">
+                                            <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+                                            <button type="submit" class="btn btn-remove">Remove from
+                                                Comparison</button>
+                                        </form>
+                                    </div>
+                                    <% }) %>
+                                        <% } else { %>
+                                            <p class="notice">No vehicles selected for comparison.</p>
+                                            <% } %>
+                        </div>
+
+                        <% if (similarVehicles && similarVehicles.length) { %>
+                            <section class="similar-vehicles">
+                                <h2>Similar Vehicles</h2>
+                                <div class="vehicle-grid">
+                                    <% similarVehicles.forEach(vehicle=> { %>
+                                        <div class="vehicle-card">
+                                            <h3>
+                                                <%= vehicle.inv_make %>
+                                                    <%= vehicle.inv_model %>
+                                            </h3>
+                                            <img src="<%= vehicle.inv_thumbnail %>"
+                                                alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>">
+                                            <p class="price">$<%= new
+                                                    Intl.NumberFormat('en-US').format(vehicle.inv_price) %>
+                                            </p>
+                                            <form action="/inv/compare/add" method="POST">
+                                                <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+                                                <button type="submit" class="btn btn-add">Add to
+                                                    Comparison</button>
+                                            </form>
+                                        </div>
+                                        <% }) %>
+                                </div>
+                            </section>
+                            <% } %>

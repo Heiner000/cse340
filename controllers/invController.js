@@ -365,8 +365,6 @@ invCont.buildComparisonView = async function (req, res, next) {
         // Get vehicle IDs from session instead of query params
         const vehicleIds = req.session.comparison || [];
 
-        console.log("Building comparison view with IDs:", vehicleIds);
-
         // Handle empty comparison list
         if (vehicleIds.length === 0) {
             let nav = await utilities.getNav();
@@ -384,7 +382,6 @@ invCont.buildComparisonView = async function (req, res, next) {
 
         // Get vehicle data
         const vehicles = await invModel.getVehiclesForComparison(numericIds);
-        console.log("Vehicles retrieved:", vehicles);
 
         if (!vehicles || vehicles.length === 0) {
             req.flash("notice", "No vehicles found for comparison");
@@ -417,7 +414,6 @@ invCont.buildComparisonView = async function (req, res, next) {
 invCont.addToComparison = async function (req, res, next) {
     try {
         const { inv_id } = req.body;
-        console.log("Adding vehicle ID:", inv_id);
 
         if (!inv_id) {
             req.flash("notice", "Invalid vehicle selection");
@@ -426,7 +422,6 @@ invCont.addToComparison = async function (req, res, next) {
 
         // Initialize or get comparison list
         req.session.comparison = req.session.comparison || [];
-        console.log("Current comparison list:", req.session.comparison);
 
         // Check if already in comparison
         if (req.session.comparison.includes(inv_id)) {
@@ -447,8 +442,6 @@ invCont.addToComparison = async function (req, res, next) {
         await new Promise((resolve) => {
             req.session.save(resolve);
         });
-
-        console.log("Updated comparison list:", req.session.comparison);
 
         req.flash("notice", "Vehicle added to comparison");
         return res.redirect("/inv/comparison");
@@ -474,13 +467,6 @@ invCont.removeFromComparison = async function (req, res, next) {
 
         // Filter using the original ID format
         req.session.comparison = comparisonList.filter((id) => id !== inv_id);
-
-        // Debug logging
-        console.log({
-            removedId: inv_id,
-            beforeRemoval: comparisonList,
-            afterRemoval: req.session.comparison,
-        });
 
         // Save session
         await new Promise((resolve) => req.session.save(resolve));
