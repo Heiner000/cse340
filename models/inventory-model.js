@@ -148,6 +148,46 @@ async function deleteInventoryItem(inv_id) {
     }
 }
 
+/* ***************************
+ *  Get multiple vehicles by array of IDs for comparison
+ * ************************** */
+async function getVehiclesForComparison(vehicleIds) {
+    try {
+        // Validate input using Array.isArray instead of util.isArray
+        if (!Array.isArray(vehicleIds) || vehicleIds.length === 0) {
+            throw new Error("Invalid vehicle IDs provided");
+        }
+
+        const sql = "SELECT * FROM public.inventory WHERE inv_id = ANY($1)";
+        const data = await pool.query(sql, [vehicleIds]);
+        return data.rows;
+    } catch (error) {
+        console.error("getVehiclesForComparison error:", error);
+        throw error;
+    }
+}
+
+/* ***************************
+ *  Get similar vehicles in same classification
+ * ************************** */
+async function getSimilarVehicles(classificationId, currentVehicleId) {
+    try {
+        const sql = `SELECT * FROM public.inventory
+        WHERE classification_id = $1
+        AND inv_id != $2 
+        ORDER BY inv_make, inv_model 
+        LIMIT 3`;
+        const data = await pool.query(sql, [
+            classificationId,
+            currentVehicleId,
+        ]);
+        return data.rows;
+    } catch (error) {
+        console.error("getSimilarVehicles error: " + error);
+        return new Error("No similar vehicles found!");
+    }
+}
+
 module.exports = {
     getClassifications,
     getInventoryByClassificationId,
@@ -156,4 +196,6 @@ module.exports = {
     addInventory,
     updateInventory,
     deleteInventoryItem,
+    getVehiclesForComparison,
+    getSimilarVehicles,
 };

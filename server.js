@@ -49,6 +49,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 // cookie parser
 app.use(cookieParser());
 
+app.use(utilities.getComparisonData);
+
 // check jwt token
 app.use(utilities.checkJWTToken);
 

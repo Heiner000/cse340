@@ -631,6 +631,110 @@ h1 {
     box-shadow: 0 0 0 2px rgba(0, 0, 150, 0.1);
 }
 
+/* comparison view */
+.comparison-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-sm);
+    margin-bottom: var(var(--space-lg));
+}
+
+.comparison-grid .vehicle-card {
+    background: var(--background-light);
+    border-radius: 8px;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: var(--space-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.comparison-grid .vehicle-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: var(--space-sm);
+}
+
+.comparison-grid .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+    margin: var(space-md) 0;
+    background: var(--overlay-bg);
+    padding: var(--space-sm);
+    border-radius: 4px;
+}
+
+.description {
+    margin: var(space-md) 0;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+/* Buttons */
+.btn {
+    width: 100%;
+    padding: var(--space-sm);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-remove {
+    background: #dc3545;
+    color: var(--background-light);
+}
+
+.btn-add {
+    background: var(--primary-color);
+    color: var(--background-light);
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* similar vehicles section */
+.similar-vehicles {
+    margin-top: var(--space-lg);
+    padding: var(--space-sm);
+}
+
+.vehicle-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+.similar-vehicles .vehicle-card {
+    background: var(--background-light);
+    border-radius: 8px;
+    padding: var(--space-sm);
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.similar-vehicles img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: var(--space-sm);
+}
+
+.similar-vehicles h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--space-xs);
+}
+
+.similar-vehicles .price {
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin: var(--space-xs) 0;
+}
+
 /* footer styles */
 footer {
     background: var(--background-light);
@@ -794,5 +898,32 @@ footer {
 
     #classificationList {
         max-width: 350px;
+    }
+
+    /* comparisons */
+    .comparison-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-lg);
+        padding: var(--space-lg);
+    }
+
+    .vehicle-card {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-lg);
+    }
+
+    .btn {
+        width: auto;
+        min-width: 200px;
+        margin: var(--space-sm) auto;
+    }
+
+    .similar-vehicles {
+        padding: var(--space-lg);
+    }
+
+    .similar-vehicles .vehicle-card {
+        padding: var(--space-md);
     }
 }

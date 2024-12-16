@@ -80,9 +80,6 @@ Util.buildClassificationGrid = async function (data) {
     return grid;
 };
 
-/* **************************************
- * Build the classification view HTML
- * ************************************ */
 /* ****************************************
  * Build the classification select list
  **************************************** */
@@ -165,6 +162,16 @@ Util.checkLogin = (req, res, next) => {
         req.flash("notice", "Please log in.");
         return res.redirect("/account/login");
     }
+};
+
+/* ****************************************
+ *  Pass comparison data to views
+ * ************************************ */
+Util.getComparisonData = async function (req, res, next) {
+    if (req.session.comparison) {
+        res.locals.comparisonList = req.session.comparison;
+    }
+    next();
 };
 
 module.exports = Util;

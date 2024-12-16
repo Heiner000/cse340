@@ -179,4 +179,26 @@ validate.checkUpdateData = async (req, res, next) => {
     next();
 };
 
+/*  **********************************
+ *  Comparison validation rules
+ * ********************************* */
+validate.checkComparisonLimit = async (req, res, next) => {
+    const { inv_id } = req.body;
+    let comparisonList = req.session.comparison || [];
+
+    // Check if vehicle already in comparison
+    if (comparisonList.includes(inv_id)) {
+        req.flash("notice", "Vehicle already in comparison");
+        return res.redirect("back");
+    }
+
+    // Check comparison limit
+    if (comparisonList.length >= 3) {
+        req.flash("notice", "Maximum 3 vehicles allowed in comparison");
+        return res.redirect("back");
+    }
+
+    next();
+};
+
 module.exports = validate;

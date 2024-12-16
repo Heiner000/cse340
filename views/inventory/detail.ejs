@@ -10,6 +10,25 @@
 
                     <%# Main content %>
                         <div id="vehicle-detail">
+                            <!-- ! ENHANCEMENTS -->
+                            <div class="vehicle-actions">
+                                <% if (locals.comparisonList?.includes(vehicle.inv_id)) { %>
+                                    <form action="/inv/compare/remove" method="POST">
+                                        <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+                                        <button type="submit" class="btn btn-remove">Remove from Comparison</button>
+                                    </form>
+                                    <% } else { %>
+                                        <form action="/inv/compare/add" method="POST">
+                                            <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+                                            <button type="submit" class="btn btn-add">Add to Comparison</button>
+                                        </form>
+                                        <% } %>
+
+                                            <% if (locals.comparisonList?.length>= 2) { %>
+                                                <a href="/inv/comparison?vehicles=<%= locals.comparisonList.join(',') %>"
+                                                    class="btn btn-compare">Compare Selected Vehicles</a>
+                                                <% } %>
+                            </div>
                             <div class="detail-container">
                                 <div class="detail-img">
                                     <img src="<%= vehicle.inv_image %>"
@@ -68,4 +87,5 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>

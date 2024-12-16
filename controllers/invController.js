@@ -353,7 +353,149 @@ invCont.deleteInventoryItem = async function (req, res, next) {
     }
 };
 
-/* ********** */
+/* **************************
+! ENHANCEMENTS
+/* ************************** */
+
+/* ***************************
+ *  Build behicle comparison view
+ * ************************** */
+invCont.buildComparisonView = async function (req, res, next) {
+    try {
+        // Get vehicle IDs from session instead of query params
+        const vehicleIds = req.session.comparison || [];
+
+        console.log("Building comparison view with IDs:", vehicleIds);
+
+        // Handle empty comparison list
+        if (vehicleIds.length === 0) {
+            let nav = await utilities.getNav();
+            return res.render("inventory/comparison", {
+                title: "Vehicle Comparison",
+                nav,
+                vehicles: [],
+                similarVehicles: [],
+                errors: null,
+            });
+        }
+
+        // Convert IDs to numbers if they're stored as strings
+        const numericIds = vehicleIds.map((id) => parseInt(id));
+
+        // Get vehicle data
+        const vehicles = await invModel.getVehiclesForComparison(numericIds);
+        console.log("Vehicles retrieved:", vehicles);
+
+        if (!vehicles || vehicles.length === 0) {
+            req.flash("notice", "No vehicles found for comparison");
+            return res.redirect("/inv");
+        }
+
+        // Get similar vehicles based on the first vehicle's classification
+        const similarVehicles = await invModel.getSimilarVehicles(
+            vehicles[0].classification_id,
+            vehicles[0].inv_id
+        );
+
+        let nav = await utilities.getNav();
+        res.render("inventory/comparison", {
+            title: "Vehicle Comparison",
+            nav,
+            vehicles,
+            similarVehicles,
+            errors: null,
+        });
+    } catch (error) {
+        console.error("Error in buildComparisonView:", error);
+        next(error);
+    }
+};
+
+/* ***************************
+ *  Add vehicle to comparison list
+ * ************************** */
+invCont.addToComparison = async function (req, res, next) {
+    try {
+        const { inv_id } = req.body;
+        console.log("Adding vehicle ID:", inv_id);
+
+        if (!inv_id) {
+            req.flash("notice", "Invalid vehicle selection");
+            return res.redirect("/inv/comparison");
+        }
+
+        // Initialize or get comparison list
+        req.session.comparison = req.session.comparison || [];
+        console.log("Current comparison list:", req.session.comparison);
+
+        // Check if already in comparison
+        if (req.session.comparison.includes(inv_id)) {
+            req.flash("notice", "Vehicle already in comparison");
+            return res.redirect("/inv/comparison");
+        }
+
+        // Check limit
+        if (req.session.comparison.length >= 3) {
+            req.flash("notice", "Maximum 3 vehicles allowed");
+            return res.redirect("/inv/comparison");
+        }
+
+        // Add to comparison
+        req.session.comparison.push(inv_id);
+
+        // Save session explicitly
+        await new Promise((resolve) => {
+            req.session.save(resolve);
+        });
+
+        console.log("Updated comparison list:", req.session.comparison);
+
+        req.flash("notice", "Vehicle added to comparison");
+        return res.redirect("/inv/comparison");
+    } catch (error) {
+        console.error("Error adding to comparison:", error);
+        next(error);
+    }
+};
+
+/* ***************************
+ *  Remove vehicle from comparison
+ * ************************** */
+invCont.removeFromComparison = async function (req, res, next) {
+    try {
+        const { inv_id } = req.body;
+        if (!inv_id) {
+            req.flash("notice", "Invalid vehicle ID");
+            return res.redirect("back");
+        }
+
+        // Get current comparison list
+        let comparisonList = req.session.comparison || [];
+
+        // Filter using the original ID format
+        req.session.comparison = comparisonList.filter((id) => id !== inv_id);
+
+        // Debug logging
+        console.log({
+            removedId: inv_id,
+            beforeRemoval: comparisonList,
+            afterRemoval: req.session.comparison,
+        });
+
+        // Save session
+        await new Promise((resolve) => req.session.save(resolve));
+
+        req.flash("notice", "Vehicle removed from comparison");
+        return res.redirect("/inv/comparison"); // Use explicit path instead of "back"
+    } catch (error) {
+        console.error("Error removing vehicle:", error);
+        next(error);
+    }
+};
+
+/* ********
+! enhancements end
+*********** */
 
 /* ***************************
  *  Build error test function

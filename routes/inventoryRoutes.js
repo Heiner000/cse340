@@ -18,9 +18,30 @@ router.get(
     utilities.handleErrors(invController.buildByInventoryId)
 );
 
+// ! Enhancement - Route to manage comparison list
+router.get(
+    "/comparison",
+    utilities.handleErrors(invController.buildComparisonView)
+);
+
+router.post(
+    "/compare/add",
+    utilities.handleErrors(invController.addToComparison)
+);
+
+// Route to remove vehicle from comparison
+router.post(
+    "/compare/remove",
+    utilities.handleErrors(invController.removeFromComparison)
+);
+
 // *********** PROTECTED ROUTES *********** //
 // Route to manage inventory
-router.get("/", utilities.checkAdminAuth, utilities.handleErrors(invController.buildManagement));
+router.get(
+    "/",
+    utilities.checkAdminAuth,
+    utilities.handleErrors(invController.buildManagement)
+);
 
 // route to build classification view
 router.get(
@@ -38,7 +59,7 @@ router.post(
     utilities.handleErrors(invController.addClassification)
 );
 
-// route to show add inventory forom
+// route to show add inventory form
 router.get(
     "/add-inventory",
     utilities.checkAdminAuth,

@@ -3,13 +3,16 @@
         <a href="/" title="Return to home page">CSE Motors</a>
     </span>
     <div id="tools">
-        <% if(locals.loggedin) { %>
-            <a title="Click to manage your account" href="/account/">Welcome <%= locals.accountData.account_firstname %>
-                    |
+        <% if (locals.comparisonList?.length> 0) { %>
+            <a href="/inv/comparison?vehicles=<%= locals.comparisonList.join(',') %>" class="comparison-link">
+                Compare Vehicles (<%= locals.comparisonList.length %>)
             </a>
-            <a title="Click to log out" href="/account/logout">Logout</a>
-            <% } else { %>
-                <a title="Click to log in" href="/account/login">Login</a>
-                <% } %>
+            <% } %>
+                <% if (locals.loggedin) { %>
+                    <a href="/account">Welcome <%= locals.accountData.account_firstname %></a>
+                    <a href="/account/logout">Logout</a>
+                    <% } else { %>
+                        <a title="Click to log in" href="/account/login">My Account</a>
+                        <% } %>
     </div>
 </header>
